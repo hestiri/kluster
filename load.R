@@ -33,6 +33,7 @@ if (!require("clValid")) install.packages("clValid")
 if (!require("dbscan")) install.packages("dbscan")
 if (!require("reshape2")) install.packages("reshape2")
 if (!require("tcltk2")) install.packages("tcltk2")
+if (!require("tictoc")) install.packages("tictoc")
 
 
 
