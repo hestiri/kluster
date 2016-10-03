@@ -51,6 +51,29 @@ tap <- toc()
 tap <- tap$toc - tap$tic
 
 
+####cluster and visualize the performance
+km1 <- hkmeans(df, k = BIC.best,iter.max = 300) 
+km2 <- hkmeans(df, k = pamk.best,iter.max = 300) 
+km3 <- hkmeans(df, k = calinski.best,iter.max = 300) 
+km4 <- hkmeans(df, k = apclus.best,iter.max = 300)
+
+par(mfrow=c(2,2))
+plot(df, col = km1$cluster, pch = 19, frame = FALSE,
+     main = paste0("K-means with k = ",BIC.best,"")) 
+points(km1$centers, col = 1:BIC.best, pch = 8, cex = 3)
+
+plot(df, col = km2$cluster, pch = 19, frame = FALSE,
+     main = paste0("K-means with k = ",pamk.best,"")) 
+points(km2$centers, col = 1:pamk.best, pch = 8, cex = 3)
+
+plot(df, col = km3$cluster, pch = 19, frame = FALSE,
+     main = paste0("K-means with k = ",calinski.best,"")) 
+points(km3$centers, col = 1:calinski.best, pch = 8, cex = 3)
+
+
+plot(df, col = km4$cluster, pch = 19, frame = FALSE,
+     main = paste0("K-means with k = ",apclus.best,"")) 
+points(km4$centers, col = 1:apclus.best, pch = 8, cex = 3)
 
 
 
