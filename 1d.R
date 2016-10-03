@@ -8,13 +8,13 @@ source("load.R") #seed is set in load
 
 
 df <- rbind(
-  cbind(rnorm(100601,1),rnorm(100601,-5,3)),
-  cbind(rnorm(40063,1),rnorm(40063,-9,1)),
-  cbind(rnorm(80063,1),rnorm(80063,4,2)),
-  cbind(rnorm(60063,1),rnorm(60063,35,3)),
-  cbind(rnorm(20061,1),rnorm(20061,29,2)),
-  cbind(rnorm(200,1),rnorm(200,80,3)),
-  cbind(rnorm(30,1),rnorm(30,120,2))
+  cbind(rnorm(121,1),rnorm(121,-5,3)),
+  cbind(rnorm(263,1),rnorm(263,-9,1)),
+  cbind(rnorm(363,1),rnorm(363,4,2)),
+  cbind(rnorm(63,1),rnorm(63,35,3)),
+  cbind(rnorm(21,1),rnorm(21,29,2)),
+  cbind(rnorm(20,1),rnorm(20,80,3)),
+  cbind(rnorm(3,1),rnorm(3,120,2))
 )
 
 colnames(df) <- c("x", "y")
@@ -24,42 +24,75 @@ df$x <- 1
 ### see the plot
 plot(df)
 
+#enter the actual number of clusters
+clusters <- 4
 
-time1 <- system.time(
+##starting to store results from different algorithms
+tic()
   ##now let's compute optimal ks with BIC
-  kBIC <- dim(Mclust(as.matrix(df), G=3:15)$z)[2]
-)
+BIC.best <- dim(Mclust(as.matrix(df), G=3:15)$z)[2]
+tBIC <- toc()
+tBIC <- tBIC$toc - tBIC$tic
+
+tic()
+pamk.best <- pamk(df)$nc
+tpamk <- toc()
+tpamk <- tpamk$toc - tpamk$tic
+
+tic()
+calinski.best <- as.numeric(which.max(cascadeKM(df, 1, 15, iter = 1000)$results[2,]))
+tcalinski <- toc()
+tcalinski <- tcalinski$toc - tcalinski$tic
+
+
+tic()
+apclus.best <- length(apcluster(negDistMat(r=2), df)@clusters)
+tap <- toc()
+tap <- tap$toc - tap$tic
+
+
 
 
 
 
 kbicssum <- list()
 kbics2 <- list()
-time2 <- list()
-time3 <- system.time(
-  for (j in 1:20) {
-    time2[[j]] <- system.time(
-      for (i in 1:10) {
-        dat2 <- as.matrix(sample(df, 500, replace = T))
+t2 <- list()
+tBIC_kluster <- list()
+for (j in 1:3) {
+      for (i in 1:5) {
+        tic()
+        dat2 <- as.matrix(sample(df, 50, replace = T))
         kbics2[[i]] <- dim(Mclust(dat2, G=3:15)$z)[2]
+        t <- toc()
+        t2[[i]] <- t$toc - t$tic
       }
-    )
     kbicssum[[j]] <- mean(as.numeric(kbics2))
   }
-)
+tBIC_kluster <- mean(unlist(t2))
+mean_BIC_kluster <- round(mean(as.numeric(kbics2)),0)
 
+table(kbicssum)
+
+
+
+cols <- c("BIC.best","tBIC","pamk.best","tpamk","calinski.best","tcalinski","apclus.best","tap",
+          "mean_BIC_kluster","tBIC_kluster")
+results <- c(BIC.best,tBIC,pamk.best,tpamk,calinski.best,tcalinski,apclus.best,tap,
+             mean_BIC_kluster,tBIC_kluster)
+sim1 <- data.frame(cols,results)
+sim1$n <- clusters
 
 
 
 boxplot(kbicssum)
 boxplot(round(as.numeric(kbicssum),0))
-table(round(as.numeric(kbicssum),0))
-mean(as.numeric(kbics2))
+which.max(table(round(as.numeric(kbicssum),0)))
 
 
 
-km1 <- clara(df$y, KBIC, samples=200) 
-km2 <- clara(df$y, "xxxxx", samples=200)
+km1 <- hkmeans(df, k = 4,iter.max = 300) 
+km2 <- hkmeans(df, k = 4,iter.max = 300) 
 
 
 par(mfrow=c(1,2))
