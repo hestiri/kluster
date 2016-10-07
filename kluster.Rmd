@@ -1,0 +1,148 @@
+---
+title: "kluster procedure to estimate optimum number of clusters"
+output: html_notebook
+author: Hossein Estiri
+---
+
+This notebook covers simulation efforts to find a more precise way to apply available cluster number optimization algorithms to large datasets.  
+
+I call the procedure *kluster*. 
+
+First, let's load the required packages and the function that carries the simulations.
+
+```{r}
+source("load.R") #seed is set in load
+source("kluster_sim.R") #performs clustering under 4 algorithms and returns the results.
+
+```
+
+The procedure is to create random datasets with certain numbers of clusters using the code chunk below:
+I conventionally call all datasets `df`. 
+```{r}
+df <- rbind(
+  cbind(rnorm(121,1),rnorm(121,-50,3))
+  ,cbind(rnorm(263,1),rnorm(263,50,1))
+  ,cbind(rnorm(363,1),rnorm(363,150,2))
+  ,cbind(rnorm(63,1),rnorm(63,250,3))
+)
+
+colnames(df) <- c("x", "y")
+df <- data.frame(df)
+```
+The idea is to generate datasets with known numbers of clusters to then compare with how cluster number optimization algorithms do.
+Let's plot out `df`:
+```{r}
+plot(df)
+```
+
+It is clear that we are expecting 4 clusters in this data. A good algorithm would suggest something close to 4 clusters!
+
+Now let's call out the `kluster_sim` function to test performance of 4 algorithms in identifying optimum number of clusters.
+The function also performs the same methods on samples of data that reduces time of processing when dealing with large datasets.
+I store the results as `sim1`.
+
+*In the function, I am basically saying that I know there are 4 clusters in this dataset -- because I created it!!! Take samples of 100 data points and estimate number of clusters per each algorithm on those samples for 5 times. Iterate the process for 20 times and let me know the result as well as the processing time for each.*
+```{r, message=FALSE}
+sim1 <- kluster_sim(data = df, clusters = 4, iter_sim = 5, iter_klust = 5, smpl = 50)
+```
+
+
+The resulting table (below) is showing that the BIC, PAMK, and the AP algorithms recommended the right number of clusters. 
+```{r}
+datatable(sim1)
+```
+
+It seems like the Calinski algorithm overestimates.
+All these are the results of running the algorithms against the entire data. As you can see in the `ptime` column, the processing time was relatively quick for all 3 algorithms. Keep in mind, n = 810.
+
+**So, the take so far here is that if you have small data (smaller than several thousands), pick what is recommended by one of the three. You can use `kluster_sim` function to make a more educated decision.** 
+
+**But, if you deal with millions of datapoints, it may get more interesting from here.**
+
+You can also see that the resampling method with PAM and AP algorithms also predicted the correct number of clusters, with on average the same processing time as if they were run against the entire data (average time for 5 runs on 50 samples of the original dataset.)
+
+
+## More clusters
+Now let's try data with more clusters that are also more dispersed.
+
+```{r}
+df <- rbind(
+  cbind(rnorm(121,-30,4),rnorm(121,-100,50))
+  ,cbind(rnorm(263,40,3),rnorm(263,50,40))
+  ,cbind(rnorm(363,10,5),rnorm(363,150,25))
+  ,cbind(rnorm(130,-10,3),rnorm(130,350,15))
+  ,cbind(rnorm(201,-30,5),rnorm(201,600,30))
+  ,cbind(rnorm(20,20,2),rnorm(20,430,20))
+  ,cbind(rnorm(40,1,2),rnorm(40,750,20))
+  ,cbind(rnorm(5,5,1),rnorm(5,1150,5))
+)
+
+colnames(df) <- c("x", "y")
+df <- data.frame(df)
+```
+ 
+This is how `df` looks:
+```{r}
+plot(df)
+```
+
+I think there are 8 clusters here. It is obviously more difficult/complex than the previous dataset. 
+Let's see what we get from `kluster_sim`:
+*this will take much longer to compute!*
+```{r, message=FALSE}
+sim2 <- kluster_sim(data = df, clusters = 8, iter_sim = 10, iter_klust = 5, smpl = 100)
+```
+
+
+The resulting table (below) is showing that the BIC, PAMK, and the AP algorithms recommended the right number of clusters. 
+```{r}
+datatable(sim2)
+```
+
+let's save the result for now.
+
+```{r}
+write.csv(sim2, file = paste("kluster_8_5_10_100_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
+```
+
+Table shows that non of the algorithms were able to suggest the correct optimum number of clusters. `kluster`'s method with 100 samples taken from the data and reiterating the process for 50 times (10 times 5) also did not yield to better results. Before getting to **Big Data** discussion, it seems that the long function is influencing the time of process for `kluster` procedures -- for example average `pam_kluster` time should be close to the `ptime` for pamk.best, but is reported much longer. I am going to break down the function for each individual algorithm.   
+
+I have written another function that let's you pick what algorithm you want to choose, `kluster_sim_sole`.
+
+It'll be faster and let you focus on one algorithm at a time. It seems like the Calinski algorithm is off most of the time in suggesting optimum number of clusters. So, let's focus on PAM and BIC algorithms for now. I'll check this on a larger dataset with 15 clusters.
+
+```{r}
+df <- rbind(
+  cbind(rnorm(1021,-30,4),rnorm(1021,0,50))
+  ,cbind(rnorm(2603,40,3),rnorm(2603,50,40))
+  ,cbind(rnorm(3063,10,5),rnorm(3063,150,25))
+  ,cbind(rnorm(1300,-10,3),rnorm(1300,350,15))
+  ,cbind(rnorm(2010,-30,5),rnorm(2010,600,30))
+  ,cbind(rnorm(200,20,2),rnorm(200,430,20))
+  ,cbind(rnorm(400,1,2),rnorm(400,750,20))
+  ,cbind(rnorm(50,5,1),rnorm(50,1150,5))
+  ,cbind(rnorm(2603,40,3),rnorm(2603,-350,40))
+  ,cbind(rnorm(3063,10,5),rnorm(3063,-450,25))
+  ,cbind(rnorm(1300,-10,3),rnorm(1300,-650,15))
+  ,cbind(rnorm(2010,-30,5),rnorm(2010,-900,30))
+  ,cbind(rnorm(200,20,2),rnorm(200,-730,20))
+  ,cbind(rnorm(400,1,2),rnorm(400,-1050,20))
+  ,cbind(rnorm(50,5,1),rnorm(50,-1450,5))
+)
+
+colnames(df) <- c("x", "y")
+df <- data.frame(df)
+```
+ 
+This is how `df` looks:
+```{r}
+plot(df)
+```
+
+Let's do a small run with PAMK -- Don't run it on your personal computer!!!
+
+```{r, message=FALSE}
+simx <- kluster_sim_sole(data = df, clusters = 15, iter_sim = 1, iter_klust = 1, smpl = 20, algorithm = "PAMK")
+
+```
+
