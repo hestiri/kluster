@@ -1,4 +1,8 @@
+### this script has the two functions for running kluster.
 
+# first function, kluster_sim, runs algorithms on both the actual data and on samples of data.
+# kluster_sim may become time consuming, when the database size is large.
+# recommendation is to skip this phase and use kluster function to only run simulations on the sampled data.
 
 
 
