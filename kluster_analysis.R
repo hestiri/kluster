@@ -2,6 +2,14 @@ source("load.R") #seed is set in load
 source("kluster.R")
 
 
+
+### in this script we run simulations using kluster 
+###function to test the outcomes of only applying algorithms on sampled data.
+### to begin, first create a database with a cluster structure.
+### then run kluster function with needed specifications, and save the results in the results folder.
+
+## below are a few examples
+
 ##database 2 with 4 clusters 1000X
 db4 <- rbind(
   cbind(rnorm(90000,-50,10),rnorm(90000,0,50))
