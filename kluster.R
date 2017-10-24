@@ -604,7 +604,7 @@ kluster <- function(data,
     # ##starting to store results from different algorithms
     # tic()
     # ##now let's compute optimal ks with BIC
-    # BIC.best <- dim(Mclust(as.matrix(data), G=2:15)$z)[2]
+    # BIC.best <- dim(Mclust(as.matrix(data), G=1:15)$z)[2]
     # tBIC <- toc()
     # tBIC <- as.numeric(tBIC$toc - tBIC$tic)
     
