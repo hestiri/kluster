@@ -2,7 +2,7 @@
 
 
 # Breast Cancer Wisconsin (Diagnostic) Data Se
-dat = read.csv(paste0(getwd(),"/publicdata/data.csv"))
+dat = read.csv(paste0(getwd(),"/Wisconsin/data.csv"))
 
 
 
