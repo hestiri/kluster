@@ -1,10 +1,14 @@
 Package: kluster
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Title: A package for scalable approximation of the number of clusters 
+Version: 0.1.0
+Author: Hossein Estiri, Aboozar Hadavand [aut, cre] 
+Maintainer: Hossein Estiri <estiri.hossein@gmail.com>, Aboozar Hadavand <hadavand.a@gmail.com>
+Description: The package deploys a procedure on the model-based approach using approximate Bayes factor for cluster number approximation. 
 Depends: R (>= 3.4.1)
-License: What license is it under?
+License: i2b2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+Suggests: knitr
+Imports: dplyr, DBI, tidytext, ggplot2, reshape2, reshape, purrr, plyr, stringr, mclust, clusterGeneration,tictoc
+BugReports: https://github.com/hestiri/kluster/issues
