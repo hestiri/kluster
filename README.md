@@ -1,5 +1,5 @@
 # kluster
-The aim of `kluster` is to provide an efficient scalable procedure for approximating the number of clusters for large datasets. 
+The aim of `kluster` package is to provide an efficient scalable procedure for approximating the number of clusters for large datasets. 
 
 To install `kluster`: 
 
