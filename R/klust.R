@@ -1,6 +1,6 @@
 ###### if you want to do kluster only for application
 
-kluster <- function(data,
+klust <- function(data,
                   iter_klust, #number of iterations for clustering with sample_n size x
                   smpl, #size of the sample_n to be taken with replacement out of data
                   algorithm = "BIC" #select analysis algorithm from BIC, PAMK, CAL, and AP
