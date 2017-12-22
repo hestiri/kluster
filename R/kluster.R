@@ -1,12 +1,13 @@
 ###### if you want to do kluster only for application
 
 kluster <- function(data,
-                  iter_klust, #number of iterations for clustering with sample_n size x
-                  smpl, #size of the sample_n to be taken with replacement out of data
+                  iter_klust = 100, #number of iterations for clustering with sample_n size x
+                  smpl = 100, #size of the sample_n to be taken with replacement out of data
                   algorithm = "BIC" #select analysis algorithm from BIC, PAMK, CAL, and AP
 ) {
 
-    size <- nrow(data)
+    smpl = ifelse(nrow(data) >= 3000, 500, smpl)
+
     if (algorithm == 'BIC') {
         ###kluster procedure
         ##bic
