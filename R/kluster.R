@@ -1,9 +1,9 @@
 ###### if you want to do kluster only on one or more methods
 
 
-klusters <- function(data,
+kluster <- function(data,
                     clusters, #number of clusters we know
-                    iter_sim, # number of simulation iterations
+                    iter_sim = 1, # number of simulation iterations, default at 1
                     iter_klust, #number of iterations for clustering with sample_n size x
                     smpl, #size of the sample_n to be taken with replacement out of data
                     algorithm = "Default", #select analysis algorithm from BIC, PAMK, CAL, and AP
