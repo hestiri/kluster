@@ -28,7 +28,7 @@ kluster_eval <- function(data,
         for (j in 1:iter_sim) {
             for (i in 1:iter_klust) {
                 tic()
-                dat2 <- as.matrix(sample_n(data, smpl, replace = T))
+                dat2 <- as.matrix(data[sample(nrow(data), smpl, replace=TRUE), ])
                 kbics2[[i]] <- dim(Mclust(dat2, G=1:15)$z)[2]
                 rm(dat2)
                 t <- toc()
@@ -104,7 +104,7 @@ kluster_eval <- function(data,
             for (j in 1:iter_sim) {
                 for (i in 1:iter_klust) {
                     tic()
-                    dat2 <- sample_n(data, smpl, replace = T)
+                    dat2 <- data[sample(nrow(data), smpl, replace=TRUE), ]
                     kpam2[[i]] <- pamk(dat2)$nc
                     rm(dat2)
                     t <- toc()
@@ -183,7 +183,7 @@ kluster_eval <- function(data,
                 for (j in 1:iter_sim) {
                     for (i in 1:iter_klust) {
                         tic()
-                        dat2 <- sample_n(data, smpl, replace = T)
+                        dat2 <- data[sample(nrow(data), smpl, replace=TRUE), ]
                         kcal2[[i]] <- as.numeric(which.max(cascadeKM(dat2, 1, 15, iter = 1000)$results[2,]))
                         rm(dat2)
                         t <- toc()
@@ -259,7 +259,7 @@ kluster_eval <- function(data,
                     for (j in 1:iter_sim) {
                         for (i in 1:iter_klust) {
                             tic()
-                            dat2 <- sample_n(data, smpl, replace = T)
+                            dat2 <- data[sample(nrow(data), smpl, replace=TRUE), ]
                             kap2[[i]] <- length(apcluster(negDistMat(r=2), dat2)@clusters)
                             rm(dat2)
                             t <- toc()
@@ -346,7 +346,7 @@ kluster_eval <- function(data,
                         tap_kluster <- list()
                         for (j in 1:iter_sim) {
                             for (i in 1:iter_klust) {
-                                dat2 <- sample_n(data, smpl, replace = T)
+                                dat2 <- data[sample(nrow(data), smpl, replace=TRUE), ]
                                 tic()
                                 kbics2[[i]] <- dim(Mclust(as.matrix(dat2), G=1:15)$z)[2]
                                 t1i <- toc()
