@@ -15,7 +15,7 @@ Features of this dataset are computed from a digitized image of a fine needle as
 ```{r}
 # Breast Cancer Wisconsin (Diagnostic) Data
 dat = read.csv("data/Breast_Cancer_Wisconsin.csv")
-ggplot(dat)+
+plot = ggplot(dat)+
   geom_point(aes(x=area_mean, y= texture_mean,colour=diagnosis))+
   ggtitle("") +
   theme_bw() +
@@ -28,5 +28,6 @@ ggplot(dat)+
         axis.text.x=element_text(colour="black", size = 10, face="plain"),
         axis.text.y=element_text(colour="black", size = 10, face="plain"),
         legend.position="bottom")
+plot
 ```
 
