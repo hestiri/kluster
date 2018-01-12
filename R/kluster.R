@@ -13,7 +13,7 @@ kluster <- function(data,
         ##bic
         kbics <- list()
         for (i in 1:iter_klust) {
-            dat2 <- as.matrix(sample_n(data, smpl, replace = T))
+            dat2 <- as.matrix(data[sample(nrow(data), smpl, replace=TRUE), ])
             kbics[[i]] <- dim(Mclust(dat2, G=1:15)$z)[2]
             rm(dat2)
         }
