@@ -1,0 +1,32 @@
+---
+title: "kluster demo"
+output: html_document
+---
+To get started with `kluster`, install the package from GitHub:
+```{r setup}
+devtools::install_github("hestiri/kluster")
+require("ggplot2")
+```
+
+To show the functionality `kluster`, we used the Breast Cancer Wisconsin (Diagnostic) dataset. 
+
+Features of this dataset are computed from a digitized image of a fine needle aspirate (FNA), describing characteristics of a breast mass cell nuclei present in the image. The `figure` below shows a scatter plot of mean area versus mean texture (standard deviation of gray-scale values) classified by diagnosis (M = malignant, B = benign). Although the two clusters of malignant and benign diagnoses are not well-separated, we can distinguish two clusters in this dataset when organized by mean area and texture.
+
+```{r}
+# Breast Cancer Wisconsin (Diagnostic) Data
+dat = read.csv("data/Breast_Cancer_Wisconsin.csv")
+ggplot(dat)+
+  geom_point(aes(x=area_mean, y= texture_mean,colour=diagnosis))+
+  ggtitle("") +
+  theme_bw() +
+  theme(panel.grid.major.y = element_line(colour = "gray"),
+        panel.grid.minor.y = element_blank(),
+        axis.line = element_line(size=1, colour = "black"),
+        panel.border = element_blank(), panel.background = element_blank(),
+        plot.title = element_text(size = 14, family = "Tahoma", face = "bold"),
+        text=element_text(family="Tahoma", face = "bold"),
+        axis.text.x=element_text(colour="black", size = 10, face="plain"),
+        axis.text.y=element_text(colour="black", size = 10, face="plain"),
+        legend.position="bottom")
+```
+
