@@ -1,0 +1,66 @@
+---
+title: "kluster package"
+output: html_notebook
+---
+
+This is a full example of using the `kluster` package.
+
+```{r}
+# install `kluster`:
+devtools::install_github("hestiri/kluster")
+
+#loading the required packages.
+if (!require("easypackages")) install.packages('easypackages', repos = "http://cran.rstudio.com/")
+
+packages("kluster","mclust","dplyr","DT","ggplot2","tictoc","clusterGeneration","factoextra","apcluster","fpc","vegan",
+         prompt = F)
+#loading the data
+setwd("..")
+dat = read.csv(paste0(getwd(),"/data/Breast_Cancer_Wisconsin.csv"))
+```
+
+We will use `kluster::Breast_Cancer_Wisconsin` for this demo. Below is a plot of the 2 clusters in this dataset.
+```{r}
+ggplot(dat)+
+  geom_point(aes(x=area_mean, y= texture_mean,colour=diagnosis),size=3,alph=0.3)+
+  ggtitle("") +
+  theme_bw() +
+  theme(panel.grid.major.y = element_line(colour = "gray"),
+        panel.grid.minor.y = element_blank(),
+        axis.line = element_line(size=0.5, colour = "black"),
+        panel.border = element_blank(), panel.background = element_blank(),
+        plot.title = element_text(size = 14, family = "Tahoma", face = "bold"),
+        text=element_text(family="Tahoma", face = "bold"),
+        axis.text.x=element_text(colour="black", size = 10, face="plain"),
+        axis.text.y=element_text(colour="black", size = 10, face="plain"),
+        legend.position="bottom")
+```
+
+Now let's get the best estimate using the main `kluster` function -- 100 itertations of the BIC algorithm on 100 random samples.
+```{r}
+k = kluster(data = dat[,c("area_mean","texture_mean")],iter_klust = 100, smpl=100, algorithm = "BIC")$f_bic_k
+k
+```
+
+to test other algorithm's kluster implementation results:
+```{r, warning= FALSE, echo= FALSE}
+eval= data.frame(kluster_eval(data = dat[,c("area_mean","texture_mean")], clusters = 2, iter_sim = 2, iter_klust = 7, smpl = 100)$sim)
+# eval
+```
+```{r}
+datatable(eval, options = list(pageLength = 8), filter = 'bottom')
+```
+
+
+
+Now we can test results of kluster across with the implementation of original algorithms. Here is an example of the BIC algorithm:
+```{r, warning= FALSE, echo= FALSE}
+sim.bic = kluster_sim(data = dat[,c("area_mean","texture_mean")], clusters = 2, iter_sim = 2, iter_klust = 7, smpl = 100, algorithm = "BIC")$sim
+# sim.bic
+```
+
+```{r}
+datatable(sim.bic, options = list(pageLength = 3), filter = 'bottom')
+
+```
+
