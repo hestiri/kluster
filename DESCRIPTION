@@ -4,7 +4,7 @@ Version: 0.1.0
 Author: Hossein Estiri, Aboozar Hadavand [aut, cre] 
 Maintainer: Hossein Estiri <estiri.hossein@gmail.com>, Aboozar Hadavand <hadavand.a@gmail.com>
 Description: The package deploys a procedure on the model-based approach using approximate Bayes factor for cluster number approximation. 
-Depends: R (>= 3.4.1)
+Depends: R (>= 3.1)
 License: i2b2
 Encoding: UTF-8
 LazyData: true
