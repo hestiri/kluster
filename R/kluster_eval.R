@@ -81,10 +81,9 @@ kluster_eval <- function(data,
 
 
         return(
-            list("sim"=sim,
-                 "m_BIC_k"=m_BIC_k,
-                 "f_BIC_k"=f_BIC_k,
-                 "BICsimk"=kbics2)
+            list("sim"<-sim,
+                 "m_BIC_k"<-m_bic_k,
+                 "f_BIC_k"<-f_bic_k)
         )
 
 
@@ -161,10 +160,9 @@ kluster_eval <- function(data,
             #
             #
             return(
-                list("sim"=sim,
-                     "m_pam_k"=m_pam_k,
-                     "f_pam_k"=f_pam_k,
-                     "PAMsimk"=kpam2)
+                list("sim"<-sim,
+                     "m_pam_k"<-m_pam_k,
+                     "f_pam_k"<-f_pam_k)
             )
 
 
@@ -234,10 +232,9 @@ kluster_eval <- function(data,
 
 
                 return(
-                    list("sim"=sim,
-                         "m_cal_k"=m_cal_k,
-                         "f_cal_k"=f_cal_k,
-                         "CALsimk"=kcal2)
+                    list("sim"<-sim,
+                         "m_cal_k"<-m_cal_k,
+                         "f_cal_k"<-f_cal_k)
                 )
 
 
@@ -315,10 +312,9 @@ kluster_eval <- function(data,
 
 
                     return(
-                        list("sim"=sim,
-                             "m_ap_k"=m_ap_k,
-                             "f_ap_k"=f_ap_k,
-                             "APsimk"=kap2)
+                        list("sim"<-sim,
+                             "m_ap_k"<-m_ap_k,
+                             "f_ap_k"<-f_ap_k)
                     )
 
 
@@ -467,16 +463,13 @@ kluster_eval <- function(data,
 
 
                         return(
-                            list("sim"=sim,
-                                 "m_BIC_k"=m_BIC_k,
-                                 "m_pam_k"=m_pam_k,
-                                 "m_ap_k"=m_ap_k,
-                                 "f_BIC_k"=f_BIC_k,
-                                 "f_pam_k"=f_pam_k,
-                                 "f_ap_k"=f_ap_k,
-                                 "BICsimk"=kbics2,
-                                 "PAMsimk"=kpam2,
-                                 "APsimk"=kap2)
+                            list("sim"<-sim,
+                                 "m_BIC_k"<-m_bic_k,
+                                 "m_pam_k"<-m_pam_k,
+                                 "m_ap_k"<-m_ap_k,
+                                 "f_BIC_k"<-f_bic_k,
+                                 "f_pam_k"<-f_pam_k,
+                                 "f_ap_k"<-f_ap_k)
                         )
 
 
