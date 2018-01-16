@@ -16,7 +16,7 @@ kluster_sim <- function(data,
     ##starting to store results from different algorithms
     tic()
     ##now let's compute optimal ks with BIC
-    BIC.best <- dim(Mclust(as.matrix(data), G=1:15)$z)[2]
+    bic.best <- dim(Mclust(as.matrix(data), G=1:15)$z)[2]
     tBIC <- toc()
     tBIC <- as.numeric(tBIC$toc - tBIC$tic)
 
@@ -43,9 +43,9 @@ kluster_sim <- function(data,
 
 
 
-    method <- c("BIC.best","BIC_kluster_mean","BIC_kluster_frq")
+    method <- c("bic.best","bic_kluster_mean","bic_kluster_frq")
     ptime <- c(tBIC,tBIC_kluster/iter_sim,tBIC_kluster/iter_sim)
-    k_num <- c(BIC.best,m_bic_k,f_bic_k)
+    k_num <- c(bic.best,m_bic_k,f_bic_k)
 
 
     sim <- data.frame(method,k_num,ptime)
@@ -331,7 +331,7 @@ kluster_sim <- function(data,
             ##starting to store results from different algorithms
             tic()
             ##now let's compute optimal ks with BIC
-            BIC.best <- dim(Mclust(as.matrix(data), G=1:15)$z)[2]
+            bic.best <- dim(Mclust(as.matrix(data), G=1:15)$z)[2]
             tBIC <- toc()
             tBIC <- as.numeric(tBIC$toc - tBIC$tic)
 
@@ -441,9 +441,9 @@ kluster_sim <- function(data,
 
 
 
-            method <- c("BIC.best","pamk.best","calinski.best","apclus.best",
-                        "BIC_kluster_mean","cal_kluster_mean","pam_kluster_mean","ap_kluster_mean",
-                        "BIC_kluster_frq","cal_kluster_frq","pam_kluster_frq","ap_kluster_frq")
+            method <- c("bic.best","pamk.best","calinski.best","apclus.best",
+                        "bic_kluster_mean","cal_kluster_mean","pam_kluster_mean","ap_kluster_mean",
+                        "bic_kluster_frq","cal_kluster_frq","pam_kluster_frq","ap_kluster_frq")
             ptime <- c(tBIC,tpamk,tcalinski,tap,
                        tBIC_kluster/iter_sim,tcal_kluster/iter_sim,tpam_kluster/iter_sim,tap_kluster/iter_sim,
                        tBIC_kluster/iter_sim,tcal_kluster/iter_sim,tpam_kluster/iter_sim,tap_kluster/iter_sim
@@ -514,7 +514,7 @@ kluster_sim <- function(data,
                       main = paste0("kluster optimum cluster number from BIC w/ resampling.
                                     Mean resampling estimate = ",m_bic_k,"
                                     ",
-                                    " and ordinary BIC suggested ",BIC.best," clusters."))
+                                    " and ordinary BIC suggested ",bic.best," clusters."))
 
               boxplot(round(as.numeric(kpamsum),0),
                       main = paste0("kluster optimum cluster number from PAM w/ resampling.
