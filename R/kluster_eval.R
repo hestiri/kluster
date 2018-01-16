@@ -42,7 +42,7 @@ kluster_eval <- function(data,
 
 
 
-        method <- c("BIC_kluster")
+        method <- c("bic_kluster")
         ptime <- c(tBIC_kluster/iter_sim)
         k_mean <- c(m_bic_k)
         k_freq <- c(f_bic_k)
@@ -81,9 +81,9 @@ kluster_eval <- function(data,
 
 
         return(
-            list("sim"<-sim,
-                 "m_bic_k"<-m_bic_k,
-                 "f_bic_k"<-f_bic_k)
+            list("sim"=sim,
+                 "m_bic_k"=m_bic_k,
+                 "f_bic_k"=f_bic_k)
         )
 
 
@@ -160,9 +160,9 @@ kluster_eval <- function(data,
             #
             #
             return(
-                list("sim"<-sim,
-                     "m_pam_k"<-m_pam_k,
-                     "f_pam_k"<-f_pam_k)
+                list("sim"=sim,
+                     "m_pam_k"=m_pam_k,
+                     "f_pam_k"=f_pam_k)
             )
 
 
@@ -232,9 +232,9 @@ kluster_eval <- function(data,
 
 
                 return(
-                    list("sim"<-sim,
-                         "m_cal_k"<-m_cal_k,
-                         "f_cal_k"<-f_cal_k)
+                    list("sim"=sim,
+                         "m_cal_k"=m_cal_k,
+                         "f_cal_k"=f_cal_k)
                 )
 
 
@@ -312,9 +312,9 @@ kluster_eval <- function(data,
 
 
                     return(
-                        list("sim"<-sim,
-                             "m_ap_k"<-m_ap_k,
-                             "f_ap_k"<-f_ap_k)
+                        list("sim"=sim,
+                             "m_ap_k"=m_ap_k,
+                             "f_ap_k"=f_ap_k)
                     )
 
 
@@ -390,8 +390,8 @@ kluster_eval <- function(data,
 
 
 
-                        method <- c("BIC_kluster_mean","cal_kluster_mean","pam_kluster_mean","ap_kluster_mean",
-                                    "BIC_kluster_frq","cal_kluster_frq","pam_kluster_frq","ap_kluster_frq")
+                        method <- c("bic_kluster_mean","cal_kluster_mean","pam_kluster_mean","ap_kluster_mean",
+                                    "bic_kluster_frq","cal_kluster_frq","pam_kluster_frq","ap_kluster_frq")
                         ptime <- c(tBIC_kluster/iter_sim,tcal_kluster/iter_sim,tpam_kluster/iter_sim,tap_kluster/iter_sim,
                                    tBIC_kluster/iter_sim,tcal_kluster/iter_sim,tpam_kluster/iter_sim,tap_kluster/iter_sim
                         )
@@ -463,13 +463,13 @@ kluster_eval <- function(data,
 
 
                         return(
-                            list("sim"<-sim,
-                                 "m_bic_k"<-m_bic_k,
-                                 "m_pam_k"<-m_pam_k,
-                                 "m_ap_k"<-m_ap_k,
-                                 "f_bic_k"<-f_bic_k,
-                                 "f_pam_k"<-f_pam_k,
-                                 "f_ap_k"<-f_ap_k)
+                            list("sim"=sim,
+                                 "m_bic_k"=m_bic_k,
+                                 "m_pam_k"=m_pam_k,
+                                 "m_ap_k"=m_ap_k,
+                                 "f_bic_k"=f_bic_k,
+                                 "f_pam_k"=f_pam_k,
+                                 "f_ap_k"=f_ap_k)
                         )
 
 
