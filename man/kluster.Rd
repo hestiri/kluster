@@ -56,5 +56,4 @@ k = kluster(data = dat[,c("area_mean","texture_mean")],iter_klust = 100, smpl=10
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~unsupervised clustering }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kluster }% __ONLY ONE__ keyword per line
+}

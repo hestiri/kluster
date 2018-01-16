@@ -68,5 +68,4 @@ dat = read.csv("data/Breast_Cancer_Wisconsin.csv")
 k = kluster_eval(data = dat[,c("area_mean","texture_mean")], clusters = 2, iter_sim = 1, iter_klust = 100, smpl = 100)$sim
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~unsupervised clustering }% use one of  RShowDoc("KEYWORDS")
-\keyword{ ~kluster }% __ONLY ONE__ keyword per line
+}
