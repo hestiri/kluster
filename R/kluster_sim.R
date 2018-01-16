@@ -83,10 +83,9 @@ kluster_sim <- function(data,
     }
     return(
       list("sim"=sim,
-           "m_kluster"=m_BIC_k,
-           "alg_orig"=BIC.best,
-           "f_kluster"=f_BIC_k,
-           "BICsimk"=kbics2)
+           "m_kluster"=m_bic_k,
+           "alg_orig"=bic.best,
+           "f_kluster"=f_bic_k)
     )
 
 
@@ -167,8 +166,7 @@ kluster_sim <- function(data,
         list("sim"=sim,
              "m_kluster"=m_pam_k,
              "alg_orig"=pamk.best,
-             "f_kluster"=f_pam_k,
-             "PAMsimk"=kpam2)
+             "f_kluster"=f_pam_k)
       )
 
 
@@ -243,8 +241,7 @@ kluster_sim <- function(data,
           list("sim"=sim,
                "m_kluster"=m_cal_k,
                "alg_orig"=calinski.best,
-               "f_kluster"=f_cal_k,
-               "CALsimk"=kcal2)
+               "f_kluster"=f_cal_k)
         )
 
 
@@ -323,8 +320,7 @@ kluster_sim <- function(data,
             list("sim"=sim,
                  "m_kluster"=m_ap_k,
                  "alg_orig"=apclus.best,
-                 "f_kluster"=f_ap_k,
-                 "APsimk"=kap2)
+                 "f_kluster"=f_ap_k)
 
           )
 
@@ -538,16 +534,12 @@ kluster_sim <- function(data,
             }
             return(
               list("sim"=sim,
-                   "m_BIC_k"=m_BIC_k,
+                   "m_BIC_k"=m_bic_k,
                    "m_pam_k"=m_pam_k,
                    "m_ap_k"=m_ap_k,
-                   "f_BIC_k"=f_BIC_k,
+                   "f_BIC_k"=f_bic_k,
                    "f_pam_k"=f_pam_k,
-                   "f_ap_k"=f_ap_k,
-                   "BICsimk"=kbics2,
-                   "CALsimk"=kcal2,
-                   "PAMsimk"=kpam2,
-                   "APsimk"=kap2)
+                   "f_ap_k"=f_ap_k)
             )
 
 
