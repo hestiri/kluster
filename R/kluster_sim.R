@@ -38,14 +38,14 @@ kluster_sim <- function(data,
       kbicssum[[j]] <- mean(as.numeric(kbics2))
     }
     tBIC_kluster <- mean(unlist(t2))
-    m_BIC_k <- round(mean(as.numeric(kbics2)),0)
-    f_BIC_k <- as.numeric(names(which.max(table(unlist(kbics2)))))
+    m_bic_k <- round(mean(as.numeric(kbics2)),0)
+    f_bic_k <- as.numeric(names(which.max(table(unlist(kbics2)))))
 
 
 
     method <- c("BIC.best","BIC_kluster_mean","BIC_kluster_frq")
     ptime <- c(tBIC,tBIC_kluster/iter_sim,tBIC_kluster/iter_sim)
-    k_num <- c(BIC.best,m_BIC_k,f_BIC_k)
+    k_num <- c(BIC.best,m_bic_k,f_bic_k)
 
 
     sim <- data.frame(method,k_num,ptime)
@@ -60,7 +60,7 @@ kluster_sim <- function(data,
 
       ####cluster and visualize the performance
       km1 <- hkmeans(data, k = BIC.best,iter.max = 300)
-      km5 <- hkmeans(data, k = m_BIC_k,iter.max = 300)
+      km5 <- hkmeans(data, k = m_bic_k,iter.max = 300)
 
 
 
@@ -69,14 +69,14 @@ kluster_sim <- function(data,
            main = paste0("HK-means with k = ",BIC.best,""))
 
       plot(data, col = km5$cluster, pch = 19, frame = FALSE,
-           main = paste0("HK-means with kluster BIC process, k = ",m_BIC_k,""))
+           main = paste0("HK-means with kluster BIC process, k = ",m_bic_k,""))
 
 
 
       par(mfrow=c(1,1))
       boxplot(round(as.numeric(kbicssum),0),
               main = paste0("kluster optimum cluster number from BIC w/ resampling.
-                            Mean resampling estimate = ",m_BIC_k,"
+                            Mean resampling estimate = ",m_bic_k,"
                             ",
                             " and ordinary BIC suggested ",BIC.best," clusters."))
 
@@ -369,8 +369,8 @@ kluster_sim <- function(data,
               kbicssum[[j]] <- mean(as.numeric(kbics2))
             }
             tBIC_kluster <- mean(unlist(t2))
-            m_BIC_k <- round(mean(as.numeric(kbics2)),0)
-            f_BIC_k <- as.numeric(names(which.max(table(unlist(kbics2)))))
+            m_bic_k <- round(mean(as.numeric(kbics2)),0)
+            f_bic_k <- as.numeric(names(which.max(table(unlist(kbics2)))))
 
 
 
@@ -449,8 +449,8 @@ kluster_sim <- function(data,
                        tBIC_kluster/iter_sim,tcal_kluster/iter_sim,tpam_kluster/iter_sim,tap_kluster/iter_sim
             )
             k_num <- c(BIC.best,pamk.best,calinski.best,apclus.best,
-                       m_BIC_k,m_cal_k,m_pam_k,m_ap_k,
-                       f_BIC_k,f_cal_k,f_pam_k,f_ap_k)
+                       m_bic_k,m_cal_k,m_pam_k,m_ap_k,
+                       f_bic_k,f_cal_k,f_pam_k,f_ap_k)
 
 
             sim <- data.frame(method,k_num,ptime)
@@ -468,7 +468,7 @@ kluster_sim <- function(data,
               km2 <- hkmeans(data, k = pamk.best,iter.max = 300)
               km3 <- hkmeans(data, k = calinski.best,iter.max = 300)
               km4 <- hkmeans(data, k = apclus.best,iter.max = 300)
-              km5 <- hkmeans(data, k = m_BIC_k,iter.max = 300)
+              km5 <- hkmeans(data, k = m_bic_k,iter.max = 300)
               km6 <- hkmeans(data, k = m_pam_k,iter.max = 300)
               km7 <- hkmeans(data, k = m_cal_k,iter.max = 300)
               km8 <- hkmeans(data, k = m_ap_k,iter.max = 300)
@@ -493,8 +493,8 @@ kluster_sim <- function(data,
               points(km4$centers, col = 1:apclus.best, pch = 8, cex = 3)
 
               plot(data, col = km5$cluster, pch = 19, frame = FALSE,
-                   main = paste0("HK-means with kluster BIC process, k = ",m_BIC_k,""))
-              points(km5$centers, col = 1:m_BIC_k, pch = 8, cex = 3)
+                   main = paste0("HK-means with kluster BIC process, k = ",m_bic_k,""))
+              points(km5$centers, col = 1:m_bic_k, pch = 8, cex = 3)
 
               plot(data, col = km6$cluster, pch = 19, frame = FALSE,
                    main = paste0("HK-means with kluster PAM process, k = ",m_pam_k,""))
@@ -512,7 +512,7 @@ kluster_sim <- function(data,
               par(mfrow=c(2,2))
               boxplot(round(as.numeric(kbicssum),0),
                       main = paste0("kluster optimum cluster number from BIC w/ resampling.
-                                    Mean resampling estimate = ",m_BIC_k,"
+                                    Mean resampling estimate = ",m_bic_k,"
                                     ",
                                     " and ordinary BIC suggested ",BIC.best," clusters."))
 
@@ -534,10 +534,10 @@ kluster_sim <- function(data,
             }
             return(
               list("sim"=sim,
-                   "m_BIC_k"=m_bic_k,
+                   "m_bic_k"=m_bic_k,
                    "m_pam_k"=m_pam_k,
                    "m_ap_k"=m_ap_k,
-                   "f_BIC_k"=f_bic_k,
+                   "f_bic_k"=f_bic_k,
                    "f_pam_k"=f_pam_k,
                    "f_ap_k"=f_ap_k)
             )
