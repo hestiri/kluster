@@ -52,7 +52,7 @@ kluster(data, iter_klust = 100, smpl = 100, algorithm = "BIC")
 \examples{
 dat = read.csv("data/Breast_Cancer_Wisconsin.csv")
 ##returning kluster's most frequent product using the BIC algorithm:
-k = kluster(data = dat[,c("area_mean","texture_mean")],iter_klust = 100, smpl=100, algorithm = "BIC")$f_BIC_k
+k = kluster(data = dat[,c("area_mean","texture_mean")],iter_klust = 100, smpl=100, algorithm = "BIC")$f_bic_k
 
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
