@@ -43,7 +43,7 @@ k
 ```
 
 to test other algorithm's kluster implementation results:
-```{r, warning= FALSE, echo= FALSE}
+```{r, warning= FALSE, echo= FALSE, results='hide'}
 eval= data.frame(kluster_eval(data = dat[,c("area_mean","texture_mean")], clusters = 2, iter_sim = 2, iter_klust = 7, smpl = 100)$sim)
 # eval
 ```
@@ -54,7 +54,7 @@ datatable(eval, options = list(pageLength = 8), filter = 'bottom')
 
 
 Now we can test results of kluster across with the implementation of original algorithms. Here is an example of the BIC algorithm:
-```{r, warning= FALSE, echo= FALSE}
+```{r, warning= FALSE, echo= FALSE, results='hide'}
 sim.bic = kluster_sim(data = dat[,c("area_mean","texture_mean")], clusters = 2, iter_sim = 2, iter_klust = 7, smpl = 100, algorithm = "BIC")$sim
 # sim.bic
 ```
