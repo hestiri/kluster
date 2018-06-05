@@ -10,11 +10,8 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 Suggests: knitr,clusterGeneration
-Imports: 
-dplyr, 
+Imports: dplyr, 
 data.table, 
-DBI, 
-DT,
 tidytext, 
 ggplot2, 
 reshape2, 
