@@ -10,5 +10,6 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 Suggests: knitr,clusterGeneration
-Imports: dplyr, DBI, tidytext, ggplot2, reshape2, reshape, purrr, plyr, stringr, mclust,tictoc,fpc,factoextra,apcluster,vegan
+Imports: dplyr,data.table, DBI, DT,tidytext, ggplot2, reshape2,
+reshape, purrr, plyr, stringr, mclust,tictoc,cluster,fpc,factoextra,apcluster,clValid,vegan
 BugReports: https://github.com/hestiri/kluster/issues
