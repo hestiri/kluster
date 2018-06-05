@@ -2,7 +2,7 @@ Package: kluster
 Title: A package for scalable approximation of the number of clusters 
 Version: 0.1.1
 Author: Hossein Estiri [aut, cre] 
-Maintainer: Hossein Estiri <estiri.hossein@gmail.com>, Aboozar Hadavand <hadavand.a@gmail.com>
+Maintainer: Hossein Estiri <estiri.hossein@gmail.com>
 Description: The package deploys a procedure on the model-based approach using approximate Bayes factor for cluster number approximation. 
 Depends: R (>= 3.1.0)
 License: i2b2
