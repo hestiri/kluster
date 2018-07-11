@@ -15,8 +15,7 @@ if (!require("easypackages")) install.packages('easypackages', repos = "http://c
 packages("kluster","mclust","dplyr","DT","ggplot2","tictoc","clusterGeneration","factoextra","apcluster","fpc","vegan",prompt = F)
 
 #loading the data
-setwd("..")
-dat <- read.csv(paste0(getwd(),"/data/Breast_Cancer_Wisconsin.csv"))
+data(Breast_Cancer_Wisconsin)
 ```
 The `kluster` package has three main functions:
 
@@ -30,7 +29,7 @@ The `kluster` package has three main functions:
 - `kluster_eval` performs evaluation analysis on kluster implementations. If a specific algorithm is not specified by the user, it will perform the kluster implementations of all cluster number approximation algorithms will provide data for evaluation of the best algorithms as well as the processing time. The actual number of clusters needs to be provided for the function to calculate approximation error.
 
 
-I will use `kluster::Breast_Cancer_Wisconsin` for this demo. Below is a plot of the 2 clusters of benign and malignant tumors by texture mean in this dataset.
+I will use `data(Breast_Cancer_Wisconsin)` for this demo. Below is a plot of the 2 clusters of benign and malignant tumors by texture mean in this dataset.
 ```{r}
 ggplot(dat)+
   geom_point(aes(x=area_mean, y= texture_mean,colour=diagnosis),size=3,alpha=0.3)+
