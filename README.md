@@ -6,3 +6,5 @@ To install `kluster`:
 ```R
 devtools::install_github("hestiri/kluster")
 ```
+
+send questions/suggestions to estiri.hossein at gmail
