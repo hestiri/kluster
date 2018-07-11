@@ -5,24 +5,35 @@ output: html_notebook
 
 This is a full example of using the `kluster` package.
 
-```{r}
-# install `kluster`:
+```{r, results='hide'}
+
+# install kluster
 devtools::install_github("hestiri/kluster")
 
-#loading the required packages.
+# #loading the required packages.
 if (!require("easypackages")) install.packages('easypackages', repos = "http://cran.rstudio.com/")
+packages("kluster","mclust","dplyr","DT","ggplot2","tictoc","clusterGeneration","factoextra","apcluster","fpc","vegan",prompt = F)
 
-packages("kluster","mclust","dplyr","DT","ggplot2","tictoc","clusterGeneration","factoextra","apcluster","fpc","vegan",
-         prompt = F)
 #loading the data
 setwd("..")
-dat = read.csv(paste0(getwd(),"/data/Breast_Cancer_Wisconsin.csv"))
+dat <- read.csv(paste0(getwd(),"/data/Breast_Cancer_Wisconsin.csv"))
 ```
+The `kluster` package has three main functions:
 
-We will use `kluster::Breast_Cancer_Wisconsin` for this demo. Below is a plot of the 2 clusters in this dataset.
+
+- `kluster` is the main kluster function. If an algorithm is not pre-defined, it will use the best implementation of kluster (most frequent product on BIC) for the production purpose. If a sample size is not pre-defined, it will use the recommended sample size (if n> 3000, sample size = 500, otherwise, sample size = 100) as default. If an iteration is not pre-set, it will iterate 100 times, as recommended through our simulation analyses.
+
+
+- `kluster_sim` performs simulation analysis to compare results of applying the original algorithm with kluster products. If a specific algorithm is not specified by the user, it will perform all original cluster number approximation algorithms and their associated kluster forms and will provide data for comparative analysis of the results as well as the processing time. The actual number of clusters needs to be provided for the function to calculate approximation error. Please not that if the dataset is large (i.2., > 50k), the original algorithms may not work and R will crash.
+
+
+- `kluster_eval` performs evaluation analysis on kluster implementations. If a specific algorithm is not specified by the user, it will perform the kluster implementations of all cluster number approximation algorithms will provide data for evaluation of the best algorithms as well as the processing time. The actual number of clusters needs to be provided for the function to calculate approximation error.
+
+
+I will use `kluster::Breast_Cancer_Wisconsin` for this demo. Below is a plot of the 2 clusters of benign and malignant tumors by texture mean in this dataset.
 ```{r}
 ggplot(dat)+
-  geom_point(aes(x=area_mean, y= texture_mean,colour=diagnosis),size=3,alph=0.3)+
+  geom_point(aes(x=area_mean, y= texture_mean,colour=diagnosis),size=3,alpha=0.3)+
   ggtitle("") +
   theme_bw() +
   theme(panel.grid.major.y = element_line(colour = "gray"),
@@ -36,31 +47,57 @@ ggplot(dat)+
         legend.position="bottom")
 ```
 
-Now let's get the best estimate using the main `kluster` function -- 100 itertations of the BIC algorithm on 100 random samples.
+
+Now let's get the best estimate using the main `kluster` function -- 10 itertations of the BIC algorithm on 100 random samples drawn from data with replacement. 
+```{r, results='hide'}
+kluster.results <- kluster(data = dat[,c("area_mean","texture_mean")],
+            iter_klust = 10, 
+            smpl=100, 
+            algorithm = "BIC")
+
+```
+The result is a dataframe including both mean and most frequent kluster product on BIC.
 ```{r}
-k = kluster(data = dat[,c("area_mean","texture_mean")],iter_klust = 100, smpl=100, algorithm = "BIC")$f_bic_k
-k
+kluster.results
+```
+In production, use `f_BIC_k` directly use the most frequent output:
+```{r}
+kluster.results$f_BIC_k
 ```
 
-to test other algorithm's kluster implementation results:
-```{r, warning= FALSE, echo= FALSE, results='hide'}
-eval= data.frame(kluster_eval(data = dat[,c("area_mean","texture_mean")], clusters = 2, iter_sim = 2, iter_klust = 7, smpl = 100)$sim)
-# eval
+There are 4 algorithms implemented in kluster evaluation functions: BIC (Bayesian Information Criterion), PAMK (Partitioning Around Medoids), CAL (Calinski and Harabasz index), and AP (Affinity Propagation). 
+
+To test performance of the other algorithms against a known gold standard number of clusters implementation results:
+```{r, results='hide'}
+eval <- data.frame(kluster_eval(data = dat[,c("area_mean","texture_mean")], 
+                              clusters = 2,#known gold standard number of clusters
+                              iter_sim = 1,#number of simulation iterations if need be more than 1
+                              iter_klust = 10,#iteration for each algorithm
+                              algorithm = "Default", #select analysis algorithm from BIC, PAMK, CAL, and AP
+                              smpl = 100)$sim)
 ```
 ```{r}
 datatable(eval, options = list(pageLength = 8), filter = 'bottom')
 ```
+`e_mean` and `e_freq` represent the respective error terms for the mean and most frequent `kluster` products on each algorithms.  
 
 
+Now we can test results of `kluster` across with the implementation of original algorithms using the `kluster_sim` function. 
+```{r, results='hide'}
+simulation.results <- kluster_sim(data = dat[,c("area_mean","texture_mean")], 
+                       clusters = 2, 
+                       iter_sim = 2, 
+                       iter_klust = 10, 
+                       smpl = 100, 
+                       algorithm = "Default")$sim
 
-Now we can test results of kluster across with the implementation of original algorithms. Here is an example of the BIC algorithm:
-```{r, warning= FALSE, echo= FALSE, results='hide'}
-sim.bic = kluster_sim(data = dat[,c("area_mean","texture_mean")], clusters = 2, iter_sim = 2, iter_klust = 7, smpl = 100, algorithm = "BIC")$sim
-# sim.bic
 ```
 
 ```{r}
-datatable(sim.bic, options = list(pageLength = 3), filter = 'bottom')
+datatable(simulation.results, options = list(pageLength = 12), filter = 'bottom')
 
 ```
+`e` is the error term -- i.e., the difference between the known number of cluster and the approximated value based on each algorithm. Processing time (`ptime`) is also demonstrated.
 
+
+email your questions/suggestions to estiri.hossein at gmail
